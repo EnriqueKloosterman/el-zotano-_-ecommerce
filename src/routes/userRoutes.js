@@ -8,9 +8,12 @@ const guestMiddleware = require('../middlewares/guestMiddleware');
 router.get('/register', guestMiddleware, usersController.registerView);
 router.post('/register', upload.single('avatar'), usersController.createNewUser);
 
-//?     ****** Rutas de Login   *****
+//?     ****** Rutas de Login   ******
 router.get('/login', guestMiddleware, usersController.loginView);
 router.post('/login', usersController.logUser);
+
+//?     ****** Ruta de logout   ******
+router.get('/logout/', usersController.logout);
 
 
 module.exports = router;

@@ -70,6 +70,12 @@ const usersController = {
                 }
             }
         })
+    },
+    //?     ***** LogOut de usuarios ******
+    logout: async (req, res) => {
+        res.clearCookie('userEmail')
+        req.session.destroy();
+        return await res.redirect('/');
     }
 
 
