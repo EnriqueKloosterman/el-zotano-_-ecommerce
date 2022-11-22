@@ -3,39 +3,134 @@
     <form action="/user/register" method="POST" enctype="multipart/form-data"  class="row g-2 d-flex justify-content-center">
         <div class=" col-md-6">
             <label for="name" class="form-label">Nombre</label>
-            <input type="text" name="name" id="name" class="form-control">
+            <input
+                type="text"
+                name="name"
+                id="name"
+                class="form-control <%= locals.errors && errors.name ? 'is-invalid' : null %>"
+                value="<%= locals.oldData ? oldData.name : null %> "
+            >
+            <% if (locals.errors && errors.name) { %>
+                <div class="text-danger">
+                    <%= errors.lastName.msg %> 
+                </div>                        
+            <% } %>
         </div>
         <div class=" col-md-6">
             <label for="lastName" class="form-label">Apellido</label>
-            <input type="text" name="lastName" id="lastName" class="form-control">
+            <input
+                type="text"
+                name="lastName"
+                id="lastName"
+                class="form-control <%= locals.errors && errors.lastName ? 'is-invalid' : null %>"
+                value="<%= locals.oldData ? oldData.lastName : null %> "
+            >
+            <% if (locals.errors && errors.lastName) { %>
+                <div class="text-danger">
+                    <%= errors.lastName.msg %> 
+                </div>                        
+            <% } %>
         </div>
         <div class="col-12">
             <label for="email" class="form-label">Email</label>
-            <input type="email" name="email" id="email" class="form-control">
+            <input
+                type="email"
+                name="email"
+                id="email"
+                class="form-control <%= locals.errors && errors.email ? 'is-invalid' : null %>"
+                value="<%= locals.oldData ? oldData.email : null %>"
+            >
+            <% if (locals.errors && errors.email) { %>
+                <div class="text-danger">
+                    <%= errors.email.msg %> 
+                </div>                        
+            <% } %>
         </div>
         <div class="col-12">
             <label for="password" class="form-label">Password</label>
-            <input type="password" name="password" class="form-control">
+            <input
+            type="password"
+            name="password"
+            class="form-control <%= locals.errors && errors.password ? 'is-invalid' : null %>"
+        >
+        <% if (locals.errors && errors.password) { %>
+            <div class="text-danger">
+                <%= errors.password.msg %> 
+            </div>                        
+        <% } %>
         </div>
         <div class="col-12">
-            <label for="city" class="form-label">Ciudad</label>
-            <input type="text" name="city" id="city" class="form-control">
+            <labelfor="city" class="form-label">Ciudad</labelfor=>
+            <input
+            type="text"
+            name="city"
+            id="city"
+            class="form-control <%= locals.errors && errors.city ? 'is-invalid' : null %>"
+            value="<%= locals.oldData ? oldData.city : null %>"
+        >
+        <% if (locals.errors && errors.city) { %>
+            <div class="text-danger">
+                <%= errors.password.msg %> 
+            </div>                        
+        <% } %>
         </div>
         <div class=" col-md-8">
             <label for="address" class="form-label">Dirección</label>
-            <input type="text" name="address" id="address" class="form-control">
+            <input
+                type="text"
+                name="address"
+                id="address"
+                class="form-control <%= locals.errors && errors.address ? 'is-invalid' : null %>"
+                value="<%= locals.oldData ? oldData.address : null %>"
+            >
+            <% if (locals.errors && errors.address) { %>
+                <div class="text-danger">
+                    <%= errors.password.msg %> 
+                </div>                        
+            <% } %>
         </div>
         <div class="col-md-2">
             <label for="number" class="form-label">Nro</label>
-            <input type="number" name="number" id="number" class="form-control">
+            <input
+                type="number"
+                name="number"
+                id="number"
+                class="form-control <%= locals.errors && errors.number ? 'is-invalid' : null %>"
+                value="<%= locals.oldData ? oldData.number : null %>"
+            >
+            <% if (locals.errors && errors.number) { %>
+                <div class="text-danger">
+                    <%= errors.number.msg %> 
+                </div>                        
+            <% } %>
         </div>
         <div class="col-md-2">
             <label for="postalCode" class="form-label">Codigo Postal</label>
-            <input type="text" name="postalCode" id="postalCode" class="form-control">
+            <input
+                type="text"
+                name="postalCode"
+                id="postalCode"
+                class="form-control <%= locals.errors && errors.postalCode ? 'is-invalid' : null %>"
+                value="<%= locals.oldData ? oldData.postalCode : null %>"
+                <% if (locals.errors && errors.postalCode) { %>
+                <div class="text-danger">
+                    <%= errors.postalCode.msg %> 
+                </div>                        
+            <% } %>
+                >
         </div>
         <div class="col-12">
-            <label for=avatar">Elija una imagen</label>
-            <input type="file" name="avatar" id="avatar"  class="form-control">
+            <label for="avatar">Elija una imagen</label>
+            <input
+                type="file"
+                name="avatar"
+                id="avatar"
+                class="form-control">
+                <% if(locals.errors && errors.avatar) { %>
+                    <div class="text-danger">
+                        <%= errors.avatar.msg %> 
+                    </div>                        
+                    <% } %>
             
         </div>
         <div class="col-md-8 form-btn d-flex justify-content-around mt-5 ">

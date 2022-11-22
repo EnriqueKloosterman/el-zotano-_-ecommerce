@@ -2,6 +2,7 @@ const express = require('express');
 const path = require('path');
 const db = require('../database/models');
 const bcryptjs = require('bcryptjs');
+const { validationResult } = require('express-validator');
 
 const usersController = {
     //?     ****** Vista de la pagina de registro de usuarios   ******
@@ -12,6 +13,33 @@ const usersController = {
     },
     //?     ****** Creación de usarios  ******
     createNewUser: async(req, res) => {
+        const validations = validationResult(req);
+
+        if(validations.errors.length > 0){
+            return res.render('pages/user/createUser',{
+                style: "/css/style.css",
+                errors: validations.mapped(),
+                oldData: req.body
+            })
+        }
+        const mail = req.body.email;
+        const userInDb = await db.Users.findOne({
+            where: {
+                email: mail
+            }
+        });
+        if(userInDb){
+            return res.render('pages/user/createUser',{
+                style: "/css/style.css",
+                errors: {
+                    email: {
+                        msg: 'La dirección de correo ulizada ya se encuetra registrada'
+                    }
+                },
+                oldData: req.body
+            })
+        }
+
         try {
             await db.Users.create({
                 name: req.body.name,
