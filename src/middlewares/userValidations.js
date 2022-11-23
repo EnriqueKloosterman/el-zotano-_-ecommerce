@@ -6,13 +6,13 @@ const db = require('../database/models');
 const validations = [
     body('name')
         .notEmpty()
-        .withMessage('Debes ingrersar un nombre.')
+        .withMessage('Debes ingresar un nombre.')
         .bail()
         .isLength({ min: 3, max: 75 })
         .withMessage('El nombre debe tener por lo menos 3 caracteres.'),
     body('lastName')
         .notEmpty()
-        .withMessage('Debes ingrersar un apellido.')
+        .withMessage('Debes ingresar un apellido.')
         .bail()
         .isLength({ min: 3, max: 75 })
         .withMessage('El apellido debe tener por lo menos 3 caracteres.'),
@@ -33,7 +33,7 @@ const validations = [
         .withMessage('Ingresa el nobre de tu ciudad.')
         .bail()
         .isLength({ min: 2, max: 100})
-        .withMessage('debe contener al menos 2 caracteres.'),
+        .withMessage('Debe contener al menos 2 caracteres.'),
     body('address')
         .notEmpty()
         .withMessage('Ingresa tu dirección.')
@@ -42,10 +42,10 @@ const validations = [
         .withMessage('Debe contener al menos 2 caracteres.'),
     body('number')
         .notEmpty()
-        .withMessage('Bebes ingrersar un numero.')
+        .withMessage('Debes ingresar un numero.')
         .bail()
         .isLength({ min: 1 , max: 7})
-        .withMessage('Debes ingrersar al menos un numero.'),
+        .withMessage('Debes ingresar al menos un numero.'),
 
     body('postalCode')
         .notEmpty()
@@ -53,7 +53,7 @@ const validations = [
         .bail()
         .isLength({ min: 3, max: 20 })
         .withMessage('Ingresa al menos 3 caracteres.'),
-    body('image').custom((value, { req }) =>{
+    body('avatar').custom((value, { req }) =>{
         let file = req.file;
         let acceptedExtension = ['.jpg', '.png', '.gif'];
         if(!file){

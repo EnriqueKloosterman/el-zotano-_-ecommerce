@@ -10,6 +10,11 @@
                         </a>
                         <ul class="dropdown-menu text-small" style="">
                             <li><a class="dropdown-item" href="/user/user-profile">Perfil</a></li>
+                            <!-- ! amdmin link -->
+                            <% if (user.role === 1) { %>
+                                <li><a href="/admin/admin-panel" class="dropdown-item">Admin Panel</a></li>
+                            <% } %>
+                            <!-- ! amdmin link -->
                             <li><a class="dropdown-item" href="/user/board">Tablero</a></li>
                             <li><a class="dropdown-item" href="#">Cambiar fondo</a></li>
                             <li><hr class="dropdown-divider"></li>

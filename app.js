@@ -44,5 +44,5 @@ app.use((req, res, next) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`aplicacón lista y corriendo en el puerto ${PORT}. Que te sea leve y no reniegues demasiado 😁😁`);
+    console.log(`aplicación lista y corriendo en el puerto ${PORT}. Que te sea leve y no reniegues demasiado 😁😁`);
 })
