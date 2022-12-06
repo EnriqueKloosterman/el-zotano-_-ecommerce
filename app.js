@@ -3,6 +3,7 @@ const path = require('path');
 const methodOverride =require('method-override');
 require('dotenv').config();
 const session = require('express-session');
+const bodyParser = require('body-parser');
 const cookies = require('cookie-parser');
 const loggedUserMiddleware = require('./src/middlewares/loggedUserMiddleware');
 
@@ -28,8 +29,10 @@ app.set('view engine', 'ejs');
 
 const publicPath = path.resolve(__dirname, 'public');
 app.use(express.static(publicPath));
+app.use(bodyParser.urlencoded({ extended: true })) //t//
 app.use(express.urlencoded({extended: false}));
 app.use(methodOverride('method'));
+app.use(bodyParser.json()) //t//
 app.use(express.json());
 
 

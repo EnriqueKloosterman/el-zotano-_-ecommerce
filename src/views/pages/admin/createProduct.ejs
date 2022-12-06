@@ -1,41 +1,46 @@
 <%- include('../../partials/head')  %>
+<%- include('../../partials/header') %>
 
-<section class="container-md">
+<section class="container-md d-flex justify-content-center">
     <form action="/admin/create-product" method="POST" enctype="multipart/form-data"  class="row g-4">
-        <div class="col-10">
+        <div class="col-md-12">
             <label for="name" class="form-label">Nombre del producto</label>
             <input type="text" name="name" id="name" class="form-control">
         </div>
-        <div class="col-5">
+        <div class="col-6">
             <label for="price" class="form-label">Precio</label>
             <input type="number" name="price" id="price" class="form-control">
         </div>
-        <div class="col-5">
+        <div class="col-6">
             <label for="discount" class="form-label">Descuento</label>
             <input type="number" name="discount" id="discount" class="form-control">
         </div>
-        <div class="col-3">
+        <div class="col-sm-4">
             <select name="manufactorer" id="manufactorer" class="form-select">
                 <option value="" disabled selected>Fabricante</option>
                 <% for(manufactorer of manufactorerDB) { %>
                     <option value="<%= manufactorer.id %>"><%= manufactorer.name %></option> <% } %> 
             </select>
+            <button type="button" class="btn btn-dark my-2" data-bs-toggle="modal" data-bs-target="#manufactorerModal">Agregar Fabricante</button>
         </div>
-        <div class="col-3">
+        <div class="col-sm-4 d-block">
             <select name="brand" id="brand" class="form-select">
                 <option value="" disabled selected>Marca</option>
                 <% for(brand of brandDB) { %>
                     <option value="<%= brand.id %>"><%= brand.name %></option> <% } %> 
             </select>
+            <button type="button" class="btn btn-dark my-2" data-bs-toggle="modal" data-bs-target="#brandModal">Agregar Marca</button>
+
         </div>
-        <div class="col-3">
+        <div class="col-sm-4 d-block">
             <select name="tag" id="tag" class="form-select">
                 <option value="" disabled selected>Categoria</option>
                 <% for(tag of tagDB) { %>
                     <option value="<%= tag.id %>"><%= tag.name %></option> <% } %> 
             </select>
+            <button type="button" class="btn btn-dark my-2" data-bs-toggle="modal" data-bs-target="#tagModal">Agregar Categoria</button>
         </div>
-        <div class="col-10">
+        <div class="col-md-12">
             <label for="description" class="form-label">Descripción del producto</label>
             <div class="descriptionList">
                 <div class="descriptionInput mb-1">
@@ -46,7 +51,7 @@
         <div class="col-3">
             <button type="button" class="btn btn-dark" id="addDescriptionBtn">Agregar parrafo</button>
         </div>
-        <div class="col-10">
+        <div class="col-md-12">
             <label for="detail" class="form-label">Detalles del producto</label>
             <div class="detailList">
                 <div class=" detailInput mb-1" id="">
@@ -57,20 +62,81 @@
         <div class="col-3">
             <button type="button" class="btn btn-dark" id="addDetailBtn">Agregar detalle</button>
         </div>
-        <div class="col-10">
+        <div class="col-md-12">
             <label for="image">
                 <input type="file" name="image" id="image" accept="image/*" class="form-control" multiple>
             </label>
         </div>
 
-        <div class="col-10 form-btn d-flex justify-content-around mt-5">
+        <div class="col-md-12 form-btn d-flex justify-content-around mt-5">
             <button type="submit" class="btn btn-success">Crear producto</button>
             <button type="reset" class="btn btn-danger">Borrar formulario</button>
         </div>
     </form>
 </section>
 
+<!--! tag modal  -->
+<div class="modal fade" id="tagModal" tabindex="-1" aria-labelledby="tagModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content d-flex justify-content-center">
+            <div class="modal-header border border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body  ">
+                <div class="card border border-0">
+                    <%- include('addNewTag') %> 
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- !
+ !      ******      brand modal      ******
+!-->
+<div class="modal fade" id="brandModal" tabindex="-1" aria-labelledby="brandModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content d-flex justify-content-center">
+            <div class="modal-header border border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body  ">
+                <div class="container-md">
+                    <div class="card border border-0">
+                        <form action="/admin/addBrand" method="POST" class="col-10 m-auto">
+                            <label for="brand" class="form-label">Nueva marca</label>   
+                            <input type="text" name="brand" id="brand" class="form-control my-2">
+                            <button type="submit" class="btn btn-success m-2">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!--!       ******      manufactrer Modal       ****** -->
+<div class="modal fade" id="manufactorerModal" tabindex="-1" aria-labelledby="manufactorerModalLabel">
+    <div class="modal-dialog">
+        <div class="modal-content d-flex justify-content-center">
+            <div class="modal-header border border-bottom-0">
+                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            </div>
+            <div class="modal-body  ">
+                <div class="container-md">
+                    <div class="card border border-0">
+                        <form action="/admin/addManufactorer" method="POST" class="col-10 m-auto">
+                            <label for="manufactorer" class="form-label">Nuevo fabricante</label>   
+                            <input type="text" name="manufactorer" id="manufactorer" class="form-control my-2">
+                            <button type="submit" class="btn btn-success m-2">Agregar</button>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
 
 
 
+<%- include('../../partials/footer') %>
 <script src="<%= script %> "></script>

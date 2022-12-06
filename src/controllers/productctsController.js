@@ -8,19 +8,26 @@ const productsController = {
 
     //todo      ******  vista de la creación de productos    ******
     createProductView: async (req, res) => {
-        let brandDB = await db.Brand.findAll()
+        let brandDB = await db.Brand.findAll({
+                order: [['name', 'ASC']]
+        })
             .catch((err) => 
                 {console.log(`la cagaste en ${err}`)})
-        let manufactorerDB = await db.Manufactorer.findAll()
+        let manufactorerDB = await db.Manufactorer.findAll({
+            order: [['name', 'ASC']]
+        })
             .catch((err) => 
                 {console.log(`la cagaste en ${err}`)})
-        let tagDB = await db.Tag.findAll()
+        let tagDB = await db.Tag.findAll({
+            order: [['name', 'ASC']]
+        })
             .catch((err) => 
                 {console.log(`la cagaste en ${err}`)})
         
         return res.render('pages/admin/createProduct',{
             brandDB, manufactorerDB, tagDB,
             style: "/css/style.css",
+            user: req.session.userLogged,
             script: "/js/productsForms.js"
 
         });
@@ -67,6 +74,42 @@ const productsController = {
             console.log(`la cagaste en ${err}, zoquete!!`);
         }
     },
+    //todo      ****** Vista de Agregar nuevo Tag   ******
+    addNewTagView: async(req, res) => {
+        return res.render('pages/admin/addNewTag',{
+            style: "/css/style.css",
+            user: req.session.userLogged,
+        }
+        
+        )
+    },
+    //todo      ****** Agregar nuevo Fabricante    ******
+    addNewManufactorer: async (req, res) => {
+        await db.Manufactorer.create({
+            name: req.body.manufactorer
+        });
+        res.redirect('/admin/create-product/');
+    },
+    //todo      ****** Agregar nuevo TAG    ******
+    addNewTag: (req, res) =>{
+        try{
+            db.Tag.create({
+                name: req.body.tag,
+            });
+            res.redirect('/admin/create-product/');
+        }
+        catch(err){
+            res.send(`la cagaste en ${err}, zoquete!!`);
+            console.log(`la cagaste en ${err}, zoquete!!`);
+        }
+    },
+    //todo      ****** Agregar nueva Marca      ******
+    addNewBrand: (req, res) => {
+        db.Brand.create({
+            name: req.body.brand
+        })
+        res.redirect('/admin/create-product/');
+    },
 //todo      ******  Vista de edicón de productos    ******
     editProductVIew: async(req, res) => {
         let id = req.params.id;
@@ -89,6 +132,7 @@ const productsController = {
         await res.render('pages/admin/editProduct',{
             productToEdit,
             brandDB, manufactorerDB, tagDB, descriptionDB,
+            user: req.session.userLogged,
             style: "/css/style.css",
             script: "/js/productsForms.js"
         })
@@ -99,7 +143,7 @@ const productsController = {
         try{
             let id = req.params.id;
             await db.Products.update({
-                name: req.body.mane,
+                name: req.body.name,
                 price: req.body.price,
                 discount: req.body.discount,
                 manufactorer_id: req.body.manufactorer,
@@ -154,7 +198,7 @@ const productsController = {
             console.log(`la cagaste en ${err}, zoquete!!`);
         }
     },
-    //todo      ******  Vista del detalle del producto   *****
+    //todo      ******  Vista del detalle del producto   ******
     productDetailView: async (req, res) => {
         try {
             let id = req.params.id;
@@ -167,12 +211,54 @@ const productsController = {
             return res.render('pages/products/productDetail', {
                 detailProduct, brandDB, tagDB, manufactorerDB,
                 style: "/css/style.css",
+                user: req.session.userLogged,
             })
         } 
         catch(err) {
             res.send(`la cagaste en ${err}, zoquete!!`);
             console.log(`la cagaste en ${err}, zoquete!!`);
         }
+    },
+    //todo      ****** Vista del panel de administrador ******
+    adminPanelView: async (req, res) => {
+        await res.render('pages/admin/adminPanelView',{
+            style: "/css/style.css",
+            user: req.session.userLogged,
+        })
+    },
+    //todo      ****** VIsta de la lista de productos   ******
+    productsList: async(req, res) => {
+        //*     ****** paginacion   ******
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber= Number.parseInt(req.query.size);
+
+        let page = 0;
+        if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0){
+            page = pageAsNumber;
+        }
+        let size = 10;
+        if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber <= 12){
+            size = sizeAsNumber;
+        }
+
+        let product = await db.Products.findAndCountAll({
+            distinct: true,
+            limit: size,
+            offset: page * size,
+            page: page,
+            // include: ['image', 'details', 'description', 'brand', 'manufactorer', 'tag']
+        })
+
+
+
+        res.render('pages/admin/productListView', {
+            user: req.session.userLogged,
+            style: "/css/style.css",
+            product: product.rows,
+            page: page,
+            totalPages: Math.ceil(product.count /size),
+            size: size
+        } )
     }
 
 

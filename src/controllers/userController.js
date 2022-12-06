@@ -17,6 +17,7 @@ const usersController = {
 
         if(validations.errors.length > 0){
             return res.render('pages/user/createUser',{
+                user: req.session.userLogged,
                 style: "/css/style.css",
                 errors: validations.mapped(),
                 oldData: req.body

@@ -1,9 +1,9 @@
-<header class="p-3 mb-3 row g-2 sticky-top header">
+<header class="p-3 mb-3 row g-2 sticky-top">
     <nav class="navbar navbar-expand-lg d-flex justify-content-center px-4">
-        <div class="col-lg-9 d-flex justify-content-around row mb-3">
+        <div class="col-lg-9 d-flex justify-content-around row">
             <a href="/" class="col-lg-3 px-2 d-flex justify-content-center"><img src="/img/site-img/ELZOTANO.png" alt="logo"></a>
             <form class="d-flex col-lg-8" role="search">
-                <div class="input-group ">
+                <div class="input-group">
                     <input type="search" class="form-control rounded-start" />
                     <label for="search" id="search" class="form-label"></label>
                     <button type="submit" id="search-btn" class="btn btn-dark rounded-end"><svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-search" viewBox="0 0 16 16">
@@ -12,11 +12,11 @@
                 </div>
             </form>
         </div>
-        <div class="col-lg-3 px-3 d-flex justify-content-start align-content-center ">
+        <div class="col-lg-3 px-3 d-flex justify-content-start mt-2">
             <% if (locals.userLogged) { %>
                 <div class="">
-                    <div class="d-flex  align-items-center  justify-content-md-end mx-3 mb-lg-2">
-                        <p class="mx-3 my-auto d-none d-sm-inline"><%= user.name %> <%= user.lastName %> <p>
+                    <div class="d-flex  align-items-center  justify-content-lg-end mx-3">
+                        <p class="mx-3 my-auto"><%= user.name %> <%= user.lastName %> <p>
                         <div class="dropdown text-end">
                             <a href="#" class="d-block link-dark text-decoration-none dropdown-toggle" data-bs-toggle="dropdown" aria-expanded="false">
                                 <img src="/img/users/<%= user.avatar %> " alt="mdo" width="40" height="40" class="rounded-circle">
@@ -41,12 +41,21 @@
                     <div class="container-fluid rounded-2 log-bar p-2">
                         <div class="d-flex flex-wrap align-items-right justify-content-end">
                             <form action="/user/login">
+                                <!-- <button type="submit" class="p-2 btn btn-danger "><i class="bi bi-google text-white"></i> Conectarse con google</button> -->
                                 <button type="submit" class="btn btn-dark btn-nav">ingresar</button>
                             </form>
                             <form action="/user/register" class="mx-2">
                                 <button type="submit" class="btn btn-dark btn-nav">crear cuenta</button>
                             </form>
-
+                            <!-- <div class="dropdown">
+                                <button class="btn  dropdown-toggle p-2 mx-2" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                </button>
+                                <ul class="dropdown-menu ">
+                                    <li><a class="dropdown-item border-bottom border-dark text-white" href="#">Cambiar el fondo</a></li>
+                                    <li><a class="dropdown-item " href="#">Salir</a></li>
+                                </ul>
+                            </div> -->
+                            <!-- <button type="" class="btn btn-light mx-2"><i class="bi bi-three-dots-vertical text-lg"></i></button> -->
                         </div>
                     </div>
             <% } %>
