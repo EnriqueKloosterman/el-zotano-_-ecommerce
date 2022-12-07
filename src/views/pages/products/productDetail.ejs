@@ -24,6 +24,7 @@
         <div class="product-details">
             <p>$<%= detailProduct.price %></p>
             <p><%= detailProduct.brand.name %></p>
+            <img src="/img/logos/brand/<%= detailProduct.brand.image %>" alt="" width="120">
             <p><%= detailProduct.manufactorer.name %></p>
             <p>#<%= detailProduct.tag.name %></p>
             <% detailProduct.description.forEach(element => { %>

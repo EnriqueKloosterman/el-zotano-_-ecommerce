@@ -7,16 +7,20 @@
             <label for="name" class="form-label">Nombre del producto</label>
             <input type="text" name="name" id="name" class="form-control">
         </div>
-        <div class="col-6">
+        <div class="col-sm-5">
             <label for="price" class="form-label">Precio</label>
             <input type="number" name="price" id="price" class="form-control">
         </div>
-        <div class="col-6">
+        <div class="col-sm-5">
             <label for="discount" class="form-label">Descuento</label>
             <input type="number" name="discount" id="discount" class="form-control">
         </div>
+        <div class="col-sm-2">
+            <label for="stock" class="form-label">Stock</label>
+            <input type="number" name="stock" id="stock" class="form-control">
+        </div>
         <div class="col-sm-4">
-            <select name="manufactorer" id="manufactorer" class="form-select">
+            <select name="manufactorer" id="manufactorer" class="form-select mb-1">
                 <option value="" disabled selected>Fabricante</option>
                 <% for(manufactorer of manufactorerDB) { %>
                     <option value="<%= manufactorer.id %>"><%= manufactorer.name %></option> <% } %> 
@@ -24,7 +28,7 @@
             <button type="button" class="btn btn-dark my-2" data-bs-toggle="modal" data-bs-target="#manufactorerModal">Agregar Fabricante</button>
         </div>
         <div class="col-sm-4 d-block">
-            <select name="brand" id="brand" class="form-select">
+            <select name="brand" id="brand" class="form-select mb-1">
                 <option value="" disabled selected>Marca</option>
                 <% for(brand of brandDB) { %>
                     <option value="<%= brand.id %>"><%= brand.name %></option> <% } %> 
@@ -33,7 +37,7 @@
 
         </div>
         <div class="col-sm-4 d-block">
-            <select name="tag" id="tag" class="form-select">
+            <select name="tag" id="tag" class="form-select mb-1">
                 <option value="" disabled selected>Categoria</option>
                 <% for(tag of tagDB) { %>
                     <option value="<%= tag.id %>"><%= tag.name %></option> <% } %> 

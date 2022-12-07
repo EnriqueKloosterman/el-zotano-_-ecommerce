@@ -113,13 +113,19 @@ const productsController = {
 //todo      ******  Vista de edicón de productos    ******
     editProductVIew: async(req, res) => {
         let id = req.params.id;
-        let brandDB = await db.Brand.findAll()
+        let brandDB = await db.Brand.findAll({
+            order: [['name', 'ASC']]
+        })
             .catch((err) => 
                 {console.log(`la cagaste en ${err}`)});
-        let manufactorerDB = await db.Manufactorer.findAll()
+        let manufactorerDB = await db.Manufactorer.findAll({
+            order: [['name', 'ASC']]
+        })
             .catch((err) => 
                 {console.log(`la cagaste en ${err}`)});
-        let tagDB = await db.Tag.findAll()
+        let tagDB = await db.Tag.findAll({
+            order: [['name', 'ASC']]
+        })
             .catch((err) => 
                 {console.log(`la cagaste en ${err}`)});
         let descriptionDB = db.Description.findAll()

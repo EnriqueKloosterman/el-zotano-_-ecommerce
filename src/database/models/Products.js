@@ -19,6 +19,9 @@ module.exports = (sequelize, DataTypes) => {
         },
         discount: {
             type: DataTypes.INTEGER,
+        },
+        stock: {
+            type: DataTypes.INTEGER,
         }
     };
     
