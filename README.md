@@ -1,3 +1,3 @@
 # el-zotano-_-ecommerce
-proyecto en evolucón de un e-commerce.
-las vistas son solo a modo de prueba.
+Proyecto en evolucón de un e-commerce.
+ Las vistas son solo a modo de prueba.
