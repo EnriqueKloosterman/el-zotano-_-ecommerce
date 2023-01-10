@@ -1,0 +1,30 @@
+<%- include('../../partials/head')  %>
+<%- include('../../partials/header') %>
+<div class="container ">
+    <% for(product of showProducts) { %> 
+    <ul class="list-group">
+        <li class="list-group-item ">
+            <a href="/products/product-detail/<%= product.id %> " class="row d-flex justify-content-arround text-decoration-none ">
+                <div class="col-1 d-flex justify-content-center product-thumbnail" >
+                    <% if (product.image.length > 0) { %>
+                        <img src="/img/products/<%= product.image[0].name%> " alt="" height="80px" class="product-thumbnail">
+                    <% } else { %>
+                        <img src="/img/nami.jpg" alt="" height="80px">
+                    <% } %>
+                </div>
+                <h4 class="text-center col-9"><%= product.name %></h4>
+                <div class="col-2">
+                    <h5 class="text-center">$: <%= product.price %> </h5>
+                </div>
+            </a>
+        </li>
+    </ul>
+    <% } %> 
+</div>
+
+
+
+
+
+
+<%- include('../../partials/footer') %>

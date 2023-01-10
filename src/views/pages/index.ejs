@@ -1,7 +1,42 @@
 
 <%- include('../partials/head') %>
 <%- include('../partials/header') %>
+<div class="container">
 
-<h1>que hay de nuevo viejo?!</h1>
+    <h1>que hay de nuevo viejo?!</h1>
+    
+    <section class="container">
+        <h2 class="text-center">Novedades</h2>
+        <div class="product-container row g-2">
+            <% for( let i = 0; i < newArrivals.length; i++ ) { %>
+                <div class="product-container col-md-3">
+                    <a href="products/product-detail/<%= newArrivals[i].id %> " class="text-decoration-none">
+                        <img src="img/products/<%= newArrivals[i].image[0].name %>" alt="" width="80%">
+                        <p><%= newArrivals[i].name %> </p>
+                        <p>$: <%= newArrivals[i].price %> </p>
+                    </a>
+                </div>
+            <% } %>
+        </div>
+    </section>
+
+    <section class="container "row g-2">
+        <h2 class="text-center">Colleción</h2>
+        <div class=d-flex justify-content-around">
+          
+          <% for( let brand of brands ) { %>
+            <div class="brand-container ">
+              <a href="/products/brand/<%= brand.name %>" >
+                <img src="img/logos/brand/<%= brand.image %> " alt="" class="col-md-11">
+              </a>
+            </div>
+            <% } %>
+          </div>
+    </section>
+
+
+
+
+</div>
 
 <%- include('../partials/footer')  %> 

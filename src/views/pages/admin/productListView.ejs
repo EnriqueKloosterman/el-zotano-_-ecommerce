@@ -1,13 +1,27 @@
 <%- include('../../partials/head') %> 
 <%- include('../../partials/header') %>
 
-
-<h2>listado de productos a editar</h2>
-<% for(product of product) { %>
-    <ul>
-      <li><a href="edit-product/<%= product.id %>"><%= product.name %></a></li>
+<div class="container">
+  <h2>listado de productos a editar</h2>
+  <% for(product of product) { %>
+    <ul class="list-group">
+      <li class="list-group-item">
+        <a href="edit-product/<%= product.id %>" class="row d-flex justify-content-arround text-decoration-none">
+          <div class="col-2 d-flex justify-content-center">
+            <% if (product.image.length > 0) { %>
+            <img src="/img/products/<%= product.image[0].name %>" alt="" height="80">
+            <% } else { %>
+              <img src="/img/nami.jpg" alt="" height="80px">
+            <% } %>
+          </div>
+          <h5 class="text-center col-10"><%= product.name %></h5>
+        </a>
+      </li>
     </ul>
-<% } %>
+    <% } %>
+</div>
+
+
 <!--!   ******  PAGINACIÓN  ******   -->
 <nav aria-label="Page navigation example">
   <ul class="pagination justify-content-center">

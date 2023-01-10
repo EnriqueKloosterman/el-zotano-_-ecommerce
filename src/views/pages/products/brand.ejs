@@ -1,0 +1,15 @@
+<%- include('../../partials/head')  %>
+<%- include('../../partials/header') %>
+
+<div class="container row g-4">
+    <div class="image-logo">
+        <% for(brand of brand) { %> 
+            <a href="/products/brand/<%= brand.name %> ">
+                <img src="/img/logos/brand/<%= brand.image %> " alt="imagen de <%= brand.image.name %>" class="col-md-4">
+            </a>
+        <% } %> 
+    </div>
+</div>
+
+
+<%- include('../../partials/footer') %>

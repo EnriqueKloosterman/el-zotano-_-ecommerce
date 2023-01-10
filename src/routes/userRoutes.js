@@ -16,5 +16,9 @@ router.post('/login', usersController.logUser);
 //?     ****** Ruta de logout   ******
 router.get('/logout/', usersController.logout);
 
+//?     ****** Ruta del perfil del usuario     ******
+router.get('/user-profile', usersController.userProfile);
+router.get('/user-profile-edit/:id', usersController.userProfileEdit);
+
 
 module.exports = router;

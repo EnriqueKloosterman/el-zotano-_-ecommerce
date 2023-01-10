@@ -100,11 +100,32 @@ const usersController = {
             }
         })
     },
-    //?     ***** LogOut de usuarios ******
+    //?     ****** LogOut de usuarios ******
     logout: async (req, res) => {
         res.clearCookie('userEmail')
         req.session.destroy();
         return await res.redirect('/');
+    },
+    //?     ****** User Profile View ******
+    userProfile: async (req, res) => {
+        return await res.render('pages/user/userProfile', {
+            style: '../css/style.css',
+            user: req.session.userLogged,
+        }) 
+    },
+    //?     ****** User Profile Edit ******
+    userProfileEdit: async (req, res) => {
+        const user = req.session.userLogged
+        const userToEdit = await db.Users.findOne({
+            where:{
+                id: user.id
+            }
+        });
+        return await res.render('pages/user/userProfileEdit',{
+            userToEdit,
+            user,
+            style: "/css/style.css",
+        })
     }
 
 

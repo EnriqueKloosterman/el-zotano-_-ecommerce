@@ -1,7 +1,6 @@
 const express = require('express');
 const db = require('../database/models');
 const sequelize = db.Sequelize;
-const Op =  db.Sequelize.Op;
 const path = require('path');
 
 const productsController = {
@@ -36,7 +35,6 @@ const productsController = {
     //todo      ****** Creacion de productos ******
     store: async(req, res) => {
         try{
-            
             const newProduct = await db.Products.create({
                 name: req.body.name,
                 price: req.body.price,
@@ -45,7 +43,6 @@ const productsController = {
                 brand_id: req.body.brand,
                 tag_id: req.body.tag
             });
-    
             let descriptionText = [];
             for(let i = 0; i < req.body.description.length; i++){
                 descriptionText.push(req.body.description[i]);
@@ -252,7 +249,7 @@ const productsController = {
             limit: size,
             offset: page * size,
             page: page,
-            // include: ['image', 'details', 'description', 'brand', 'manufactorer', 'tag']
+            include: ['image']
         })
 
 
@@ -265,7 +262,143 @@ const productsController = {
             totalPages: Math.ceil(product.count /size),
             size: size
         } )
-    }
+    },
+    //todo      ****** vista de colleciones ******
+    brandCollection: async (req, res) => {
+        const brand = await db.brand.findAll();
+        return await res.render('pages/products/brand',{
+            user: req.session.userLogged,
+            style: "/css/style.css",
+            brand: brand
+        })
+    },
+
+    //todo      ****** vista de la productos por collecciones ******
+    brandSelected: async (req, res) => {
+        const brand = req.params.brand;
+    
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber= Number.parseInt(req.query.size);
+        let page = 0;
+        if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0 ){
+            page = pageAsNumber;
+        }
+        let size = 16;
+        if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber <= 20){
+            size = sizeAsNumber;
+        }
+        let brandToShow;
+        let showProducts;
+        
+        try{
+            brandToShow = await db.Brand.findOne({
+                where: {
+                    name: brand,
+                }
+            })
+        }
+        catch(err) {
+            res.send(`la cagaste en ${err}, zoquete!!`);
+            console.log(`la cagaste en ${err}, zoquete!!`);
+        }
+        try{
+            showProducts = await db.Products.findAndCountAll({
+                limit: size,
+                distinct: true,
+                offset: page * size,
+                page: page,
+                include: ['image'],
+                where: {
+                    brand_id : brandToShow.id
+                }
+            })
+        }
+        catch(err) {
+            res.send(`la cagaste en ${err}, zoquete!!`);
+            console.log(`la cagaste en ${err}, zoquete!!`);
+        }
+    
+        return await res.render('pages/products/showProducts', {
+            user: req.session.userLogged,
+            style: "/css/style.css",
+            showProducts: showProducts.rows,
+            brand: brandToShow,
+            totalPages: Math.ceil(showProducts.count / size),
+            size: size,
+            // page: page
+        })
+    
+    },
+
+    //todo      ****** vista de tag ******
+    productTag: async (req, res) => {
+        const tag = await db.Tag.findAll();
+        return await res.render('pages/products/tag',{
+            user: req.session.userLogged,
+            style: "/css/style.css",
+            tag: tag
+        })
+    },
+
+    //todo      ****** vista de la productos por tag ******
+    tagSelected: async (req, res) => {
+        const tag = req.params.tag;
+
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber= Number.parseInt(req.query.size);
+        let page = 0;
+        if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0 ){
+            page = pageAsNumber;
+        }
+        let size = 16;
+        if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber <= 20){
+            size = sizeAsNumber;
+        }
+        let tagToShow;
+        let showProducts;
+        
+        try{
+            tagToShow = await db.Tag.findOne({
+                where: {
+                    name: tag,
+                }
+            })
+        }
+        catch(err) {
+            res.send(`la cagaste en ${err}, zoquete!!`);
+            console.log(`la cagaste en ${err}, zoquete!!`);
+        }
+        try{
+            showProducts = await db.Products.findAndCountAll({
+                limit: size,
+                distinct: true,
+                offset: page * size,
+                page: page,
+                include: ['image'],
+                where: {
+                    tag_id : tagToShow.id
+                }
+            })
+        }
+        catch(err) {
+            res.send(`la cagaste en ${err}, zoquete!!`);
+            console.log(`la cagaste en ${err}, zoquete!!`);
+        }
+
+        return await res.render('pages/products/showProducts', {
+            user: req.session.userLogged,
+            style: "/css/style.css",
+            showProducts: showProducts.rows,
+            tag: tagToShow,
+            totalPages: Math.ceil(showProducts.count / size),
+            size: size,
+            // page: page
+        })
+
+    },
+
+
+
 
 
 
