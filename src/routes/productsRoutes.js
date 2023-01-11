@@ -12,4 +12,9 @@ router.get('/brand/:brand', productsController.brandSelected);
 //?     ******  Vista por Tags      ******
 router.get('/tag', productsController.productTag);
 router.get('/tag/:tag', productsController.tagSelected)
+
+//?     ****** VIsta por Fabricante     ******
+router.get('/manufactorer', productsController.productManufactorer);
+router.get('/manufactorer/:manufactorer', productsController.manufactorerSelected);
+
 module.exports = router;

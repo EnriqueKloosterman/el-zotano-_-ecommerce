@@ -398,12 +398,71 @@ const productsController = {
     },
 
 
+     //todo      ****** vista de fabricante ******
+    productManufactorer: async (req, res) => {
+        const manufactorer = await db.Manufactorer.findAll();
+        return await res.render('pages/products/manufactorer',{
+            user: req.session.userLogged,
+            style: "/css/style.css",
+            manufactorer: manufactorer
+        })
+    },
 
+    //todo      ****** vista de la productos por fabricante ******
+    manufactorerSelected: async (req, res) => {
+        const manufactorer = req.params.manufactorer;
 
+        const pageAsNumber = Number.parseInt(req.query.page);
+        const sizeAsNumber= Number.parseInt(req.query.size);
+        let page = 0;
+        if(!Number.isNaN(pageAsNumber) && pageAsNumber > 0 ){
+            page = pageAsNumber;
+        }
+        let size = 16;
+        if(!Number.isNaN(sizeAsNumber) && sizeAsNumber > 0 && sizeAsNumber <= 20){
+            size = sizeAsNumber;
+        }
+        let manufactorerToShow;
+        let showProducts;
+        
+        try{
+            manufactorerToShow = await db.Manufactorer.findOne({
+                where: {
+                    name: manufactorer,
+                }
+            })
+        }
+        catch(err) {
+            res.send(`la cagaste en ${err}, zoquete!!`);
+            console.log(`la cagaste en ${err}, zoquete!!`);
+        }
+        try{
+            showProducts = await db.Products.findAndCountAll({
+                limit: size,
+                distinct: true,
+                offset: page * size,
+                page: page,
+                include: ['image'],
+                where: {
+                    manufactorer_id : manufactorerToShow.id
+                }
+            })
+        }
+        catch(err) {
+            res.send(`la cagaste en ${err}, zoquete!!`);
+            console.log(`la cagaste en ${err}, zoquete!!`);
+        }
 
-
-
-
+        return await res.render('pages/products/showProducts', {
+            user: req.session.userLogged,
+            style: "/css/style.css",
+            showProducts: showProducts.rows,
+            manufactorer: manufactorerToShow,
+            totalPages: Math.ceil(showProducts.count / size),
+            size: size,
+            // page: page
+        })
+    }
 
 }
 
