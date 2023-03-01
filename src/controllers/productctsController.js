@@ -3,6 +3,10 @@ const db = require('../database/models');
 const sequelize = db.Sequelize;
 const path = require('path');
 
+const toThousand = (n) => {
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+}
+
 const productsController = {
 
     //todo      ******  vista de la creación de productos    ******
@@ -208,10 +212,16 @@ const productsController = {
             let brandDB = await db.Brand.findAll();
             let manufactorerDB = await db.Manufactorer.findAll();
             const tagDB = await db.Tag.findAll();
-            let detailProduct = await db.Products.findByPk(id,{
+            const detailProduct = await db.Products.findByPk(id,{
                 include:['image', 'details', 'description', 'brand', 'manufactorer', 'tag' ]
             });
-            return res.render('pages/products/productDetail', {
+
+            // format the price of each product
+            if (detailProduct) {
+                detailProduct.price = toThousand(detailProduct.price);
+            };
+
+            return res.render('pages/products/productDetail2', {
                 detailProduct, brandDB, tagDB, manufactorerDB,
                 style: "/css/style.css",
                 user: req.session.userLogged,
@@ -462,7 +472,7 @@ const productsController = {
             size: size,
             // page: page
         })
-    }
+    },
 
 }
 

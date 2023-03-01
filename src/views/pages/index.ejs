@@ -9,7 +9,7 @@
         <h2 class="text-center">Novedades</h2>
         <div class="product-container row g-2">
             <% for( let i = 0; i < newArrivals.length; i++ ) { %>
-                <div class="product-container col-md-3">
+                <div class="product-container col-md-6 col-lg-3">
                     <a href="products/product-detail/<%= newArrivals[i].id %> " class="text-decoration-none">
                         <img src="img/products/<%= newArrivals[i].image[0].name %>" alt="" width="80%">
                         <p><%= newArrivals[i].name %> </p>

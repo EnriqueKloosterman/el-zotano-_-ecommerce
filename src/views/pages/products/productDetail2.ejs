@@ -1,0 +1,89 @@
+<%- include('../../partials/head')  %>
+<%- include('../../partials/header') %>
+
+    <div class="container bg-gradient text-bg-dark">
+        <h2>testing modal</h2>
+        <h3><%= detailProduct.name %></h3>
+        <div class="img-container text-center">
+            <div>
+                <% if (detailProduct.image.length > 0) { %>
+                    <img src="/img/products/<%= detailProduct.image[0].name%>" alt="" width="90%" class="gallery-image" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                <% } else { %>
+                    <img src="/img/nami.jpg" alt="" height="300px">
+                <% } %>
+            </div>
+            <div class="d-flex flex-wrap justify-content-between mt-4 row g-2 thumbnail-container">
+                <% if (detailProduct.image.length > 0) { %>
+                    <% for (let i = 0; i < detailProduct.image.length; i++) { %>
+                        <div class="img-small col-3 align-self-center align-content-center">
+                            <img src="/img/products/<%= detailProduct.image[i].name %>" class="col-12 align-content-center my-auto gallery-thumbnail gallery-image" alt="" data-bs-toggle="modal" data-bs-target="#galleryModal">
+                        </div>
+                    <% } %>
+                <% } %>
+            </div>
+        </div>
+        
+        <!-- Modal -->
+        <div class="modal fade" id="galleryModal" tabindex="-1" aria-labelledby="galleryModalLabel" aria-hidden="true">
+            <div class="modal-dialog modal-dialog-centered modal-lg">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                    </div>
+                    <div class="modal-body text-center">
+                        <img src="" alt="" class="modal-image w-100">
+                    </div>
+
+                    <button class="carousel-control-prev prev-image" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="prev">
+                        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+
+                    </button>
+                    <button class="carousel-control-next next-image" type="button" data-bs-target="#carouselExampleControls" data-bs-slide="next">
+                        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+
+                    </button>
+
+
+
+                    <!-- <div class="modal-footer">
+                        <button type="button" class="btn btn-secondary prev-image">Previous</button>
+                        <button type="button" class="btn btn-secondary next-image">Next</button>
+                    </div> -->
+                </div>
+            </div>
+        </div>
+        <div class="product-details">
+            <p>$<%= detailProduct.price %></p>
+            <p><%= detailProduct.brand.name %></p>
+            <a href="/products/brand/<%= detailProduct.brand.name %>" >
+                <img src="/img/logos/brand/<%= detailProduct.brand.image %>" alt="" width="120">
+            </a>
+            <a href="/products/manufactorer/<%= detailProduct.manufactorer.name %>" >
+                <p><%= detailProduct.manufactorer.name %></p>
+            </a>
+            <a href="/products/tag/<%= detailProduct.tag.name %>" >
+                <p>#<%= detailProduct.tag.name %></p>
+            </a>
+            <% detailProduct.description.forEach(element => { %>
+                <p><%= element.description %></p>  
+            <% }) %>
+
+            <ul>
+                <% detailProduct.details.forEach(element => { %>
+                    <li><%= element.detail %></li>  
+                <% }) %>
+            </ul>
+        </div>
+    </div>
+
+
+
+<script src="/js/imageGallery.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.1.3/js/bootstrap.bundle.min.js"></script>
+
+
+
+
+
+
+<%- include('../../partials/footer')  %>

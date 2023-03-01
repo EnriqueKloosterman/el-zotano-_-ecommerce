@@ -17,4 +17,5 @@ router.get('/tag/:tag', productsController.tagSelected)
 router.get('/manufactorer', productsController.productManufactorer);
 router.get('/manufactorer/:manufactorer', productsController.manufactorerSelected);
 
+
 module.exports = router;
