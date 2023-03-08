@@ -221,7 +221,7 @@ const productsController = {
                 detailProduct.price = toThousand(detailProduct.price);
             };
 
-            return res.render('pages/products/productDetail2', {
+            return res.render('pages/products/productDetail', {
                 detailProduct, brandDB, tagDB, manufactorerDB,
                 style: "/css/style.css",
                 user: req.session.userLogged,
