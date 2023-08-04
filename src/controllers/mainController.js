@@ -4,7 +4,7 @@ const db = require('../database/models');
 const Sequelize = db.Sequelize;
 
 const toThousand = (n) => {
-    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".");
+    return n.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
 }
 
 const mainController = {
@@ -27,8 +27,19 @@ const mainController = {
             limit: 5,
         });
 
+        //!
+        const featured = await db.Products.findAll({
+            include:["image", "brand", "tag", "manufactorer"],
+            order: Sequelize.literal('rand()'),
+            limit: 4,
+        });
+
+        featured.forEach(product => {
+            product.price = toThousand(product.price);
+        });
+
         return await res.render('pages/index', {
-            newArrivals, brands,
+            newArrivals, brands, featured, 
             user: req.session.userLogged,
             style: "/css/style.css",
         });
